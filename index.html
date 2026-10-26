@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Satış Bölgeleri Haritası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+.leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<style>
+/* Düzen: üst şerit (başlık + arama), altında harita | sağ işaret paneli; telefonda harita üstte, panel altta */
+:root {
+  --bg: #EDF0F3; --panel: #FFFFFF; --fg: #16202B; --muted: #586474; --line: #DBE0E6; --chip: #F2F4F7;
+  --sea: #D3DEE8; --land: #FFFFFF; --ilce-line: #C2CBD5; --il-line: #66768A; --mah-line: #D5DBE2;
+  --izin: #15905A; --red: #D23439; --sel: #2350F5;
+  --izin-koyu: #117A4B; --red-koyu: #BE2A30;
+  --f-sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1218; --panel: #141B23; --fg: #E5EAF0; --muted: #94A1B1; --line: #26303C; --chip: #1C252F;
+    --sea: #091017; --land: #19212B; --ilce-line: #2D3946; --il-line: #8191A4; --mah-line: #26313C;
+    --izin: #2CB673; --red: #EE5156; --sel: #7D96FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1218; --panel: #141B23; --fg: #E5EAF0; --muted: #94A1B1; --line: #26303C; --chip: #1C252F;
+  --sea: #091017; --land: #19212B; --ilce-line: #2D3946; --il-line: #8191A4; --mah-line: #26313C;
+  --izin: #2CB673; --red: #EE5156; --sel: #7D96FF;
+  color-scheme: dark;
+}
+
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--f-sans); font-size: 14px; line-height: 1.45;
+  display: grid; grid-template-rows: auto minmax(0, 1fr);
+}
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--sel); outline-offset: 2px; }
+
+/* Üst şerit */
+.ust {
+  display: flex; align-items: center; gap: 12px 24px; flex-wrap: wrap;
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background: var(--panel); border-bottom: 1px solid var(--line);
+}
+.marka { display: flex; flex-direction: column; min-width: 0; }
+.marka h1 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.marka span { font-size: 12px; color: var(--muted); letter-spacing: 0.02em; }
+.arama { position: relative; flex: 1 1 280px; max-width: 460px; margin-left: auto; }
+.arama input {
+  width: 100%; box-sizing: border-box; padding: 9px 12px 9px 36px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--chip);
+}
+.arama input:focus { background: var(--panel); border-color: var(--sel); outline: none; }
+.arama svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--muted); }
+.sonuclar {
+  position: absolute; z-index: 1200; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px; list-style: none;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 28px rgb(0 0 0 / 0.16);
+  max-height: min(60vh, 420px); overflow: auto;
+}
+.sonuclar li { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px; cursor: pointer; }
+.sonuclar li[aria-selected="true"], .sonuclar li:hover { background: var(--chip); }
+.sonuclar .ad { font-weight: 500; }
+.sonuclar .yol { color: var(--muted); font-size: 12.5px; margin-left: auto; text-align: right; }
+.sonuclar .bos { color: var(--muted); cursor: default; }
+
+/* Gövde */
+.govde { display: grid; grid-template-columns: minmax(0, 1fr) 360px; min-height: 0; }
+.harita-sar { position: relative; min-height: 0; }
+#harita { position: absolute; inset: 0; }
+.leaflet-container { background: var(--sea); font-family: var(--f-sans); }
+.leaflet-container:focus, .leaflet-container:focus-visible { outline: none; }
+.leaflet-il-pane, .leaflet-il-pane *, .leaflet-secim-pane, .leaflet-secim-pane *,
+.leaflet-etiket-pane, .leaflet-etiket-pane *, .leaflet-lasso-pane, .leaflet-lasso-pane * { pointer-events: none !important; }
+.leaflet-control-zoom a { background: var(--panel) !important; color: var(--fg) !important; border-color: var(--line) !important; }
+.leaflet-control-attribution { background: color-mix(in srgb, var(--panel) 80%, transparent) !important; color: var(--muted) !important; }
+.leaflet-control-attribution a { color: var(--muted) !important; }
+.leaflet-bar { border-color: var(--line) !important; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12) !important; }
+.harita-sar.tara #harita, .harita-sar.tara .leaflet-interactive { cursor: crosshair !important; }
+
+.ad-etiket span {
+  position: absolute; transform: translate(-50%, -50%); white-space: nowrap; color: var(--fg);
+  text-shadow: 0 0 3px var(--land), 0 0 3px var(--land), 0 0 2px var(--land);
+}
+.ad-etiket.il span { font-size: 11px; font-weight: 500; opacity: 0.75; letter-spacing: 0.01em; }
+.ad-etiket.ilce span { font-size: 12px; font-weight: 600; opacity: 0.82; }
+.ad-etiket.mah span { font-size: 10.5px; font-weight: 500; opacity: 0.78; }
+
+.harita-ust {
+  position: absolute; z-index: 1000; top: 10px; left: 10px; right: 64px;
+  display: flex; flex-wrap: wrap; gap: 8px; pointer-events: none;
+}
+.seg {
+  pointer-events: auto; display: inline-flex; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; padding: 3px; box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+}
+.seg button {
+  display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; border-radius: 6px;
+  padding: 5px 10px; font-size: 13px; font-weight: 500; color: var(--muted);
+}
+.seg button svg { width: 15px; height: 15px; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--panel); }
+.seg button .alt { font-weight: 400; opacity: 0.75; font-size: 12px; }
+
+.bilgi {
+  position: absolute; z-index: 1000; left: 10px; bottom: 26px; max-width: min(360px, calc(100% - 20px));
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 11px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12); font-size: 13px;
+}
+.bilgi .b-ad { font-weight: 600; }
+.bilgi .b-yol { color: var(--muted); }
+.bilgi .b-durum { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.bilgi.bos { color: var(--muted); }
+
+.toast {
+  position: absolute; z-index: 1100; left: 50%; bottom: 26px; transform: translate(-50%, 8px); opacity: 0;
+  background: var(--fg); color: var(--panel); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  transition: opacity .18s, transform .18s; pointer-events: none; max-width: calc(100% - 40px); text-align: center;
+}
+.toast.acik { opacity: 1; transform: translate(-50%, 0); }
+
+/* Panel */
+.panel { background: var(--panel); border-left: 1px solid var(--line); overflow: auto; min-width: 0; }
+.blok { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.blok-bas { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.blok-bas h2 { margin: 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.sayi { font-family: var(--f-mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ipucu { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+.ornek-bant { background: var(--chip); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 13px; }
+.ornek-bant p { margin: 0; flex: 1 1 200px; }
+
+.cipler { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; max-height: 168px; overflow: auto; }
+.cip {
+  display: inline-flex; align-items: center; gap: 6px; max-width: 100%;
+  background: var(--chip); border: 1px solid var(--line); border-radius: 999px; padding: 3px 4px 3px 9px; font-size: 13px;
+}
+.cip .ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cip button { border: 0; background: transparent; color: var(--muted); width: 20px; height: 20px; border-radius: 50%; line-height: 1; padding: 0; }
+.cip button:hover { background: var(--line); color: var(--fg); }
+.rozet {
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; line-height: 16px; flex: none;
+}
+.nokta { width: 9px; height: 9px; border-radius: 50%; flex: none; background: var(--line); }
+.nokta.izin { background: var(--izin); }
+.nokta.red { background: var(--red); }
+
+.eylemler { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn {
+  border: 0; border-radius: 8px; padding: 11px 12px; font-weight: 600; font-size: 14px; color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn.izin { background: var(--izin-koyu); }
+.btn.red { background: var(--red-koyu); }
+.btn:disabled { opacity: 0.38; cursor: not-allowed; }
+.ikincil { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+.metin-btn { border: 0; background: transparent; color: var(--muted); padding: 6px 8px; border-radius: 6px; font-size: 13px; font-weight: 500; }
+.metin-btn:hover:not(:disabled) { background: var(--chip); color: var(--fg); }
+.metin-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.metin-btn.tehlike { color: var(--red); }
+
+.cubuk { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--chip); margin: 4px 0 10px; }
+.cubuk i { display: block; height: 100%; }
+.cubuk .izin { background: var(--izin); }
+.cubuk .red { background: var(--red); }
+.ozet-satir { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 4px 8px; font-size: 13px; }
+.ozet-satir .deger { font-family: var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.kural-not { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
+
+.kural-grup + .kural-grup { margin-top: 14px; }
+.kural-grup h3 { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+.kurallar { list-style: none; margin: 0; padding: 0; }
+.kurallar li { display: flex; align-items: center; gap: 4px; border-radius: 6px; }
+.kurallar li:hover { background: var(--chip); }
+.kural-ad { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; border: 0; background: transparent; text-align: left; padding: 6px 6px; }
+.kural-ad .ad { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kural-ad .yol { color: var(--muted); font-size: 12.5px; margin-left: auto; white-space: nowrap; }
+.kurallar .sil { border: 0; background: transparent; color: var(--muted); width: 28px; height: 28px; border-radius: 6px; flex: none; }
+.kurallar .sil:hover { background: var(--line); color: var(--fg); }
+.bos-not { color: var(--muted); font-size: 13px; margin: 0; }
+
+details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.aktar-ic { display: grid; gap: 8px; margin-top: 10px; }
+.aktar-ic .satir { display: flex; flex-wrap: wrap; gap: 6px; }
+.kucuk-btn { border: 1px solid var(--line); background: var(--chip); border-radius: 6px; padding: 6px 10px; font-size: 13px; font-weight: 500; }
+.kucuk-btn:hover { border-color: var(--muted); }
+.aktar-ic textarea {
+  width: 100%; box-sizing: border-box; min-height: 90px; resize: vertical; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg); padding: 8px; font-family: var(--f-mono); font-size: 12px;
+}
+.lejant { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; align-items: center; font-size: 12.5px; color: var(--muted); }
+.lejant i { width: 22px; height: 12px; border-radius: 3px; display: block; border: 1px solid var(--line); }
+.kaynak { padding: 14px 18px 20px; font-size: 12px; color: var(--muted); }
+.kaynak p { margin: 0 0 6px; max-width: 60ch; }
+
+.yukleniyor { position: absolute; inset: 0; display: grid; place-items: center; z-index: 900; color: var(--muted); font-size: 13px; pointer-events: none; }
+
+@media (max-width: 820px) {
+  html, body { height: auto; }
+  body { display: block; }
+  .govde { display: block; }
+  .harita-sar { height: 64svh; min-height: 360px; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  .blok { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .kaynak { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .arama { flex-basis: 100%; max-width: none; margin-left: 0; }
+  .seg button { padding: 5px 8px; }
+  .bilgi { bottom: 22px; font-size: 12.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+</head>
+<body>
+<header class="ust">
+  <div class="marka">
+    <h1>Satış Bölgeleri Haritası</h1>
+    <span>Laciel Paris · prototip</span>
+  </div>
+  <div class="arama">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="ara" type="search" autocomplete="off" spellcheck="false" placeholder="İl, ilçe, semt veya mahalle ara" aria-label="Bölge ara" aria-controls="sonuclar" aria-expanded="false">
+    <ul class="sonuclar" id="sonuclar" role="listbox" hidden></ul>
+  </div>
+</header>
+
+<main class="govde">
+  <div class="harita-sar" id="haritaSar">
+    <div id="harita" aria-label="Türkiye haritası"></div>
+    <div class="yukleniyor" id="yukleniyor">Harita yükleniyor…</div>
+    <div class="harita-ust">
+      <div class="seg" role="group" aria-label="Seçim düzeyi" id="segDuzey">
+        <button type="button" data-duzey="oto" aria-pressed="true">Oto <span class="alt" id="otoAlt">· İl</span></button>
+        <button type="button" data-duzey="il" aria-pressed="false">İl</button>
+        <button type="button" data-duzey="ilce" aria-pressed="false">İlçe</button>
+        <button type="button" data-duzey="mahalle" aria-pressed="false">Mahalle</button>
+      </div>
+      <div class="seg" role="group" aria-label="Harita aracı" id="segArac">
+        <button type="button" data-arac="gez" aria-pressed="true" title="Haritayı sürükleyerek gezin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9 2 12l3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>Gez</button>
+        <button type="button" data-arac="tara" aria-pressed="false" title="Sürükleyerek alan çizin; içinde kalan bölgeler seçilir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 21c-1.5 0-3-1-3-2.5S5.5 16 7 16c3 0 3 3 0 5Z"/><path d="M7 16c-2-1.5-4-4-3-7 1.5-4.5 8-7 13-5s5 8 1 10.5c-2.5 1.5-6 1.5-9 1.5"/></svg>Alan tara</button>
+      </div>
+    </div>
+    <div class="bilgi bos" id="bilgi">Bir bölgenin üzerine gelin ya da dokunun.</div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <aside class="panel" id="panel">
+    <section class="blok ornek-bant" id="ornekBant" hidden>
+      <p>Harita örnek işaretlerle açıldı. Kendi listenize başlamak için örnekleri silin.</p>
+      <button type="button" class="kucuk-btn" id="btnOrnekSil">Örnekleri sil</button>
+    </section>
+
+    <section class="blok" aria-labelledby="hSecim">
+      <header class="blok-bas"><h2 id="hSecim">Seçim</h2><span class="sayi" id="secimSayi">0 bölge</span></header>
+      <p class="ipucu" id="secimIpucu">Haritada bir bölgeye dokunun; tekrar dokununca seçimden çıkar. Birden fazla bölge seçebilirsiniz. <b>Alan tara</b> ile sürükleyip çizdiğiniz alandaki bölgeleri topluca seçin.</p>
+      <ul class="cipler" id="secimListe"></ul>
+      <div class="eylemler">
+        <button type="button" class="btn izin" id="btnIzin" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Satış İzin</button>
+        <button type="button" class="btn red" id="btnRed" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m6.5 17.5 11-11"/></svg>Satış Red</button>
+      </div>
+      <div class="ikincil">
+        <button type="button" class="metin-btn" id="btnKaldir" disabled>İşareti kaldır</button>
+        <button type="button" class="metin-btn" id="btnTemizle" disabled>Seçimi temizle</button>
+      </div>
+    </section>
+
+    <section class="blok" aria-labelledby="hDurum">
+      <header class="blok-bas"><h2 id="hDurum">Durum</h2><span class="sayi" id="durumAlt">ilçe bazında</span></header>
+      <div class="cubuk" id="cubuk" aria-hidden="true"><i class="izin"></i><i class="red"></i></div>
+      <div class="ozet-satir" id="ozet"></div>
+      <p class="kural-not">Alt bölgeye konan işaret üst bölgeninkinin önüne geçer. Örneğin il izinli, içindeki bir ilçe red olabilir.</p>
+    </section>
+
+    <section class="blok" aria-labelledby="hIsaret">
+      <header class="blok-bas"><h2 id="hIsaret">İşaretler</h2><span class="sayi" id="kuralSayi"></span></header>
+      <div id="kuralGruplar"></div>
+    </section>
+
+    <details class="blok" id="aktar">
+      <summary>Dışa / içe aktar</summary>
+      <div class="aktar-ic">
+        <div class="satir">
+          <button type="button" class="kucuk-btn" id="btnJson">JSON kopyala</button>
+          <button type="button" class="kucuk-btn" id="btnCsv">CSV kopyala</button>
+        </div>
+        <label for="iceMetin" class="ipucu" style="margin:0">İçe almak için JSON'u buraya yapıştırın:</label>
+        <textarea id="iceMetin" spellcheck="false"></textarea>
+        <div class="satir">
+          <button type="button" class="kucuk-btn" id="btnIceAl">İçe al</button>
+          <span style="flex:1"></span>
+          <button type="button" class="metin-btn tehlike" id="btnHepsiniSil">Tüm işaretleri sil</button>
+        </div>
+      </div>
+    </details>
+
+    <section class="blok" aria-label="Renkler">
+      <div class="lejant" id="lejant">
+        <i data-renk="izin-dogrudan"></i><span>Satış izinli</span>
+        <i data-renk="izin-miras"></i><span>Satış izinli, üst bölgeden gelen</span>
+        <i data-renk="red-dogrudan"></i><span>Satış red</span>
+        <i data-renk="red-miras"></i><span>Satış red, üst bölgeden gelen</span>
+        <i data-renk="bos"></i><span>İşaretsiz</span>
+        <i data-renk="secim"></i><span>Seçili</span>
+      </div>
+    </section>
+
+    <footer class="kaynak">
+      <p id="mahNot">Mahalle sınırları yükleniyor…</p>
+      <p>İl ve ilçe sınırları: geoBoundaries (OpenStreetMap kaynaklı). Mahalle ve semtler: © OpenStreetMap katkıcıları, ODbL. İşaretler bu tarayıcıda saklanır.</p>
+    </footer>
+  </aside>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(async function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const DUZEY = { il: 'İl', ilce: 'İlçe', mahalle: 'Mahalle', semt: 'Semt' };
+  const DURUM = { izin: 'Satış izinli', red: 'Satış red' };
+  const KAYIT = 'laciel-satis-bolgeleri-v1';
+  const ORNEK = { '34': 'izin', '34/Esenyurt': 'red', '06': 'izin', '35': 'red', '35/Karşıyaka': 'izin' };
+
+  const S = { kurallar: {}, ornek: false, secim: new Set(), duzey: 'oto', arac: 'gez', lassoBitti: 0, mahNotGosterildi: false };
+  const B = new Map();      // anahtar -> bölge kaydı
+  const ILLER = new Map();  // plaka -> il adı
+  let aramaDizini = [];
+
+  // ---------- Kayıt ----------
+  function yukle() {
+    try {
+      const v = JSON.parse(localStorage.getItem(KAYIT) || 'null');
+      if (v && v.kurallar && typeof v.kurallar === 'object') { S.kurallar = v.kurallar; S.ornek = !!v.ornek; return; }
+    } catch (e) { /* depolama kapalı olabilir */ }
+    S.kurallar = { ...ORNEK }; S.ornek = true;
+  }
+  function kaydet() {
+    try { localStorage.setItem(KAYIT, JSON.stringify({ kurallar: S.kurallar, ornek: S.ornek })); } catch (e) { /* yok say */ }
+  }
+
+  // ---------- Renkler ----------
+  const T = {};
+  function tokenOku() {
+    const cs = getComputedStyle(document.documentElement);
+    for (const k of ['land', 'sea', 'ilce-line', 'il-line', 'mah-line', 'izin', 'red', 'sel', 'fg']) T[k] = cs.getPropertyValue('--' + k).trim();
+  }
+  function rgb(h) {
+    h = h.replace('#', '');
+    if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+    const n = parseInt(h, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function karis(a, b, t) {
+    const x = rgb(a), y = rgb(b);
+    return 'rgb(' + x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(',') + ')';
+  }
+
+  // ---------- Kurallar ----------
+  const ust = (k) => { const i = k.lastIndexOf('/'); return i < 0 ? null : k.slice(0, i); };
+  function etkin(k) {
+    for (let c = k; c; c = ust(c)) if (S.kurallar[c]) return { durum: S.kurallar[c], kaynak: c };
+    return null;
+  }
+  function dolgu(k) {
+    const e = etkin(k);
+    if (!e) return T.land;
+    return karis(T.land, T[e.durum], e.kaynak === k ? 0.68 : 0.42);
+  }
+  function parcala(k) {
+    const p = k.split('/');
+    return { plaka: p[0], il: ILLER.get(p[0]) || p[0], ilce: p[1] || null, mahalle: p[2] || null,
+      duzey: p.length === 1 ? 'il' : p.length === 2 ? 'ilce' : 'mahalle', ad: p[p.length - 1] === p[0] ? (ILLER.get(p[0]) || p[0]) : p[p.length - 1] };
+  }
+  function yolMetni(k) {
+    const p = parcala(k);
+    if (p.duzey === 'il') return 'Plaka ' + p.plaka;
+    if (p.duzey === 'ilce') return p.il;
+    return p.ilce + ', ' + p.il;
+  }
+
+  // ---------- Harita ----------
+  yukle();
+  tokenOku();
+  const map = L.map('harita', { zoomControl: false, preferCanvas: true, minZoom: 4, maxZoom: 17, zoomSnap: 0.25, zoomDelta: 0.5, wheelPxPerZoomLevel: 100 });
+  L.control.zoom({ position: 'topright', zoomInTitle: 'Yakınlaş', zoomOutTitle: 'Uzaklaş' }).addTo(map);
+  map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+  map.attributionControl.addAttribution('© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> katkıcıları');
+  [['ilce', 400], ['il', 420], ['secim', 430], ['etiket', 440], ['lasso', 450]].forEach(([ad, z]) => { map.createPane(ad).style.zIndex = z; });
+  const TR_SINIR = L.latLngBounds([35.8, 25.6], [42.1, 44.8]);
+  map.setView([39, 35], 5);
+  // Kap ilk anda boyutsuz olabilir (gizli sekme, panel açılışı); ilk gerçek boyutta Türkiye'ye sığdır
+  let sigdi = false;
+  const sigdir = () => {
+    const s = map.getSize();
+    if (s.x > 50 && s.y > 50) { map.fitBounds(TR_SINIR, { padding: [8, 8] }); sigdi = true; }
+  };
+  try { new ResizeObserver(() => { map.invalidateSize(false); if (!sigdi) sigdir(); }).observe(document.getElementById('harita')); } catch (e) { /* eski tarayıcı */ }
+  sigdir();
+  window.satisHaritasi = { map, S };
+
+  const rAlt = L.canvas({ pane: 'ilce', padding: 0.4, tolerance: 1 });
+  const rUst = L.canvas({ pane: 'il', padding: 0.4 });
+  const rSec = L.canvas({ pane: 'secim', padding: 0.4 });
+
+  function seviye() {
+    if (S.duzey !== 'oto') return S.duzey;
+    const z = map.getZoom();
+    return z < 7.5 ? 'il' : z < 10.5 ? 'ilce' : 'mahalle';
+  }
+
+  let topo;
+  try {
+    topo = await (await fetch('data/tr.json')).json();
+  } catch (e) {
+    $('#yukleniyor').textContent = 'Harita verisi yüklenemedi. Sayfayı yenileyin.';
+    return;
+  }
+  const ilGJ = topojson.feature(topo, topo.objects.il).features;
+  const ilceGJ = topojson.feature(topo, topo.objects.ilce).features;
+  ilGJ.forEach((f) => ILLER.set(f.properties.plaka, f.properties.il));
+
+  function altStil(k, mah) {
+    const z = map.getZoom();
+    return { fill: true, fillColor: dolgu(k), fillOpacity: 1, color: mah ? T['mah-line'] : T['ilce-line'], weight: mah ? 0.6 : (z < 7 ? 0.45 : 0.8), opacity: 1 };
+  }
+  const ilStil = () => ({ fill: false, color: T['il-line'], weight: map.getZoom() < 7 ? 1 : 1.5, opacity: 0.95 });
+
+  const ilceKatman = L.geoJSON(ilceGJ, {
+    renderer: rAlt, pane: 'ilce',
+    style: (f) => altStil(f.properties.plaka + '/' + f.properties.ilce, false),
+    onEachFeature: (f, ly) => {
+      const p = f.properties, k = p.plaka + '/' + p.ilce;
+      B.set(k, { anahtar: k, duzey: 'ilce', ad: p.ilce, plaka: p.plaka, ilce: p.ilce, f, ly, c: [p.cy, p.cx] });
+      ly._k = k;
+      ly.on('click', (e) => tikla(k, e));
+      ly.on('mouseover', () => uzerinde(k));
+      ly.on('mouseout', () => uzerinde(null));
+    },
+  }).addTo(map);
+
+  const ilKatman = L.geoJSON(ilGJ, {
+    renderer: rUst, pane: 'il', interactive: false, style: ilStil,
+    onEachFeature: (f, ly) => {
+      const p = f.properties;
+      B.set(p.plaka, { anahtar: p.plaka, duzey: 'il', ad: p.il, plaka: p.plaka, f, ly, c: [p.cy, p.cx] });
+    },
+  }).addTo(map);
+
+
+  const mahGrup = L.layerGroup();
+  const mahKatmanlar = [];
+  const secKatman = L.layerGroup().addTo(map);
+  let uzerKatman = null;
+  $('#yukleniyor').remove();
+
+  // ---------- Seçim ve etkileşim ----------
+  function hedef(k) {
+    // Tıklanan alt bölgeden, geçerli seçim düzeyindeki bölgeyi bulur
+    const p = parcala(k), sv = seviye();
+    if (sv === 'il') return p.plaka;
+    if (sv === 'ilce') return p.plaka + '/' + p.ilce;
+    if (p.duzey === 'ilce' && !S.mahNotGosterildi) {
+      S.mahNotGosterildi = true;
+      toast('Bu noktada mahalle sınırı yok; ilçe seçildi.');
+    }
+    return k;
+  }
+  function tikla(k, e) {
+    if (Date.now() - S.lassoBitti < 400) return;
+    const h = hedef(k);
+    if (S.secim.has(h)) S.secim.delete(h); else S.secim.add(h);
+    secimGuncelle();
+    bilgiGoster(h);
+  }
+  function uzerinde(k) {
+    if (uzerKatman) { map.removeLayer(uzerKatman); uzerKatman = null; }
+    if (!k) { return; }
+    const h = hedef(k), b = B.get(h);
+    if (!b) return;
+    uzerKatman = L.geoJSON(b.f, { renderer: rSec, pane: 'secim', interactive: false, style: { fill: false, color: T.fg, weight: 2, opacity: 0.85 } }).addTo(map);
+    bilgiGoster(h);
+  }
+  function bilgiGoster(k) {
+    S.sonBilgi = k;
+    const el = $('#bilgi'), p = parcala(k), e = etkin(k);
+    el.classList.remove('bos');
+    let durum = '<span class="nokta"></span>İşaretsiz';
+    if (e) {
+      const kaynak = e.kaynak === k ? '' : ' <span class="b-yol">(' + parcala(e.kaynak).ad + ' işaretinden)</span>';
+      durum = '<span class="nokta ' + e.durum + '"></span>' + DURUM[e.durum] + kaynak;
+    }
+    const secili = S.secim.has(k) ? ' · <span style="color:var(--sel)">seçili</span>' : '';
+    el.innerHTML = '<div><span class="b-ad">' + esc(p.ad) + '</span> <span class="b-yol">· ' + DUZEY[p.duzey] + ', ' + esc(yolMetni(k)) + '</span>' + secili + '</div><div class="b-durum">' + durum + '</div>';
+  }
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function secimCiz() {
+    secKatman.clearLayers();
+    for (const k of S.secim) {
+      const b = B.get(k);
+      if (!b) continue;
+      L.geoJSON(b.f, { renderer: rSec, pane: 'secim', interactive: false, style: { fill: true, fillColor: T.sel, fillOpacity: 0.14, color: T.sel, weight: 2.6, opacity: 1 } }).addTo(secKatman);
+    }
+  }
+  function secimGuncelle() {
+    secimCiz();
+    const n = S.secim.size;
+    $('#secimSayi').textContent = n + ' bölge';
+    $('#secimIpucu').hidden = n > 0;
+    ['#btnIzin', '#btnRed', '#btnKaldir', '#btnTemizle'].forEach((s) => { $(s).disabled = n === 0; });
+    const ul = $('#secimListe');
+    ul.innerHTML = '';
+    for (const k of S.secim) {
+      const p = parcala(k), e = etkin(k);
+      const li = document.createElement('li');
+      li.className = 'cip';
+      li.innerHTML = '<span class="nokta ' + (e ? e.durum : '') + '"></span><span class="rozet">' + DUZEY[p.duzey] + '</span><span class="ad" title="' + esc(p.ad + ' · ' + yolMetni(k)) + '">' + esc(p.ad) + '</span><button type="button" aria-label="' + esc(p.ad) + ' seçimden çıkar">×</button>';
+      li.querySelector('button').onclick = () => { S.secim.delete(k); secimGuncelle(); };
+      ul.appendChild(li);
+    }
+  }
+
+  function boya() {
+    ilceKatman.eachLayer((ly) => ly.setStyle(altStil(ly._k, false)));
+    mahKatmanlar.forEach((g) => g.eachLayer((ly) => ly.setStyle(altStil(ly._k, true))));
+    ilKatman.setStyle(ilStil);
+    secimCiz();
+    ozetGuncelle();
+    kurallarGuncelle();
+    secimGuncelle();
+    lejantBoya();
+    if (S.sonBilgi) bilgiGoster(S.sonBilgi);
+  }
+
+  function isaretle(durum) {
+    const n = S.secim.size;
+    if (!n) return;
+    for (const k of S.secim) { if (durum) S.kurallar[k] = durum; else delete S.kurallar[k]; }
+    S.secim.clear();
+    kaydet();
+    boya();
+    toast(durum ? n + ' bölge “' + DURUM[durum] + '” olarak işaretlendi.' : n + ' bölgenin işareti kaldırıldı.');
+  }
+
+  // ---------- Özet, kurallar, lejant ----------
+  function ozetGuncelle() {
+    let iz = 0, rd = 0, bs = 0;
+    for (const b of B.values()) {
+      if (b.duzey !== 'ilce') continue;
+      const e = etkin(b.anahtar);
+      if (!e) bs++; else if (e.durum === 'izin') iz++; else rd++;
+    }
+    const top = iz + rd + bs || 1;
+    const c = $('#cubuk').children;
+    c[0].style.width = (iz / top * 100) + '%';
+    c[1].style.width = (rd / top * 100) + '%';
+    const f = (n) => n.toLocaleString('tr-TR');
+    $('#durumAlt').textContent = f(top) + ' ilçe';
+    $('#ozet').innerHTML =
+      '<span class="nokta izin"></span><span>Satış izinli ilçe</span><span class="deger">' + f(iz) + '</span>' +
+      '<span class="nokta red"></span><span>Satış red ilçe</span><span class="deger">' + f(rd) + '</span>' +
+      '<span class="nokta"></span><span>İşaretsiz ilçe</span><span class="deger">' + f(bs) + '</span>';
+  }
+  const SIRA = { il: 0, ilce: 1, mahalle: 2 };
+  function kurallarGuncelle() {
+    const kap = $('#kuralGruplar');
+    kap.innerHTML = '';
+    const anahtarlar = Object.keys(S.kurallar);
+    $('#kuralSayi').textContent = anahtarlar.length ? anahtarlar.length + ' işaret' : '';
+    $('#ornekBant').hidden = !S.ornek;
+    if (!anahtarlar.length) {
+      kap.innerHTML = '<p class="bos-not">Henüz işaret yok. Haritadan bölge seçip <b>Satış İzin</b> veya <b>Satış Red</b> deyin.</p>';
+      return;
+    }
+    for (const durum of ['izin', 'red']) {
+      const liste = anahtarlar.filter((k) => S.kurallar[k] === durum).map((k) => ({ k, p: parcala(k) }))
+        .sort((a, b) => SIRA[a.p.duzey] - SIRA[b.p.duzey] || a.p.ad.localeCompare(b.p.ad, 'tr'));
+      if (!liste.length) continue;
+      const g = document.createElement('div');
+      g.className = 'kural-grup';
+      g.innerHTML = '<h3><span class="nokta ' + durum + '"></span>' + DURUM[durum] + ' <span class="sayi">' + liste.length + '</span></h3><ul class="kurallar"></ul>';
+      const ul = g.querySelector('ul');
+      for (const { k, p } of liste) {
+        const li = document.createElement('li');
+        li.innerHTML = '<button type="button" class="kural-ad"><span class="rozet">' + DUZEY[p.duzey] + '</span><span class="ad">' + esc(p.ad) + '</span><span class="yol">' + esc(yolMetni(k)) + '</span></button><button type="button" class="sil" aria-label="' + esc(p.ad) + ' işaretini kaldır" title="İşareti kaldır">×</button>';
+        li.querySelector('.kural-ad').onclick = () => git(k, false);
+        li.querySelector('.sil').onclick = () => { delete S.kurallar[k]; kaydet(); boya(); toast(p.ad + ' işareti kaldırıldı.'); };
+        ul.appendChild(li);
+      }
+      kap.appendChild(g);
+    }
+  }
+  function lejantBoya() {
+    const r = {
+      'izin-dogrudan': karis(T.land, T.izin, 0.68), 'izin-miras': karis(T.land, T.izin, 0.42),
+      'red-dogrudan': karis(T.land, T.red, 0.68), 'red-miras': karis(T.land, T.red, 0.42), bos: T.land,
+    };
+    document.querySelectorAll('#lejant i').forEach((i) => {
+      const k = i.dataset.renk;
+      if (k === 'secim') { i.style.background = 'transparent'; i.style.border = '2px solid ' + T.sel; }
+      else i.style.background = r[k];
+    });
+  }
+
+  function git(k, sec) {
+    const b = B.get(k);
+    if (!b) return;
+    const bnd = b.ly.getBounds();
+    map.flyToBounds(bnd, { padding: [40, 40], maxZoom: b.duzey === 'mahalle' ? 15 : 12, duration: 0.6 });
+    if (sec) { S.secim.add(k); secimGuncelle(); }
+    bilgiGoster(k);
+  }
+
+  // ---------- Düzey ve araç ----------
+  function gorunurluk() {
+    const z = map.getZoom(), sv = seviye();
+    const mahGoster = z >= 9 || sv === 'mahalle';
+    if (mahGoster && !map.hasLayer(mahGrup)) mahGrup.addTo(map);
+    if (!mahGoster && map.hasLayer(mahGrup)) map.removeLayer(mahGrup);
+    $('#otoAlt').textContent = '· ' + DUZEY[sv];
+    $('#otoAlt').hidden = S.duzey !== 'oto';
+  }
+  map.on('zoomend', () => { gorunurluk(); ilceKatman.eachLayer((ly) => ly.setStyle({ weight: map.getZoom() < 7 ? 0.45 : 0.8 })); ilKatman.setStyle(ilStil); });
+  document.querySelectorAll('#segDuzey button').forEach((bt) => bt.addEventListener('click', () => {
+    S.duzey = bt.dataset.duzey;
+    document.querySelectorAll('#segDuzey button').forEach((x) => x.setAttribute('aria-pressed', String(x === bt)));
+    gorunurluk();
+    if (S.duzey !== 'oto') toast('Seçim düzeyi: ' + DUZEY[S.duzey]);
+  }));
+  function aracSec(a) {
+    S.arac = a;
+    document.querySelectorAll('#segArac button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.arac === a)));
+    const tara = a === 'tara';
+    $('#haritaSar').classList.toggle('tara', tara);
+    if (tara) { map.dragging.disable(); map.boxZoom.disable(); } else { map.dragging.enable(); map.boxZoom.enable(); }
+    $('#harita').style.touchAction = tara ? 'none' : '';
+    if (tara) toast('Seçmek istediğiniz alanın çevresini sürükleyerek çizin.');
+  }
+  document.querySelectorAll('#segArac button').forEach((bt) => bt.addEventListener('click', () => aracSec(bt.dataset.arac)));
+
+  // ---------- Alan tarama (serbest çizim) ----------
+  const harEl = $('#harita');
+  let cizim = null;
+  harEl.addEventListener('pointerdown', (e) => {
+    if (S.arac !== 'tara' || e.button > 0 || e.target.closest('.leaflet-control')) return;
+    const p = map.mouseEventToContainerPoint(e);
+    cizim = { id: e.pointerId, pts: [p], cizgi: L.polyline([map.containerPointToLatLng(p)], { pane: 'lasso', renderer: L.svg({ pane: 'lasso' }), color: T.sel, weight: 2, dashArray: '6 5', interactive: false }).addTo(map) };
+    try { harEl.setPointerCapture(e.pointerId); } catch (_) { /* yok say */ }
+  });
+  harEl.addEventListener('pointermove', (e) => {
+    if (!cizim || e.pointerId !== cizim.id) return;
+    const p = map.mouseEventToContainerPoint(e), son = cizim.pts[cizim.pts.length - 1];
+    if (p.distanceTo(son) < 4) return;
+    cizim.pts.push(p);
+    cizim.cizgi.addLatLng(map.containerPointToLatLng(p));
+  });
+  function cizimBitir(e) {
+    if (!cizim || e.pointerId !== cizim.id) return;
+    const pts = cizim.pts;
+    map.removeLayer(cizim.cizgi);
+    cizim = null;
+    if (pts.length < 6) return; // tek dokunuş: normal tıklama gibi davranır
+    S.lassoBitti = Date.now();
+    const sv = seviye();
+    let eklenen = 0;
+    for (const b of B.values()) {
+      if (b.duzey !== sv || !b.c || b.c[0] == null) continue;
+      if (icinde(map.latLngToContainerPoint(b.c), pts) && !S.secim.has(b.anahtar)) { S.secim.add(b.anahtar); eklenen++; }
+    }
+    secimGuncelle();
+    toast(eklenen ? eklenen + ' ' + DUZEY[sv].toLocaleLowerCase('tr') + ' seçime eklendi.' : 'Çizilen alanda yeni ' + DUZEY[sv].toLocaleLowerCase('tr') + ' bulunamadı.');
+  }
+  harEl.addEventListener('pointerup', cizimBitir);
+  harEl.addEventListener('pointercancel', cizimBitir);
+  function icinde(p, poly) {
+    let ic = false;
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const a = poly[i], b = poly[j];
+      if ((a.y > p.y) !== (b.y > p.y) && p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x) ic = !ic;
+    }
+    return ic;
+  }
+
+  // ---------- Butonlar ----------
+  $('#btnIzin').onclick = () => isaretle('izin');
+  $('#btnRed').onclick = () => isaretle('red');
+  $('#btnKaldir').onclick = () => isaretle(null);
+  $('#btnTemizle').onclick = () => { S.secim.clear(); secimGuncelle(); };
+  $('#btnOrnekSil').onclick = () => {
+    for (const k of Object.keys(ORNEK)) if (S.kurallar[k] === ORNEK[k]) delete S.kurallar[k];
+    S.ornek = false; kaydet(); boya(); toast('Örnek işaretler silindi.');
+  };
+  let silOnay = null;
+  $('#btnHepsiniSil').onclick = (ev) => {
+    const bt = ev.currentTarget;
+    if (!silOnay) {
+      bt.textContent = 'Emin misiniz? Tekrar basın';
+      silOnay = setTimeout(() => { bt.textContent = 'Tüm işaretleri sil'; silOnay = null; }, 4000);
+      return;
+    }
+    clearTimeout(silOnay); silOnay = null; bt.textContent = 'Tüm işaretleri sil';
+    S.kurallar = {}; S.ornek = false; kaydet(); boya(); toast('Tüm işaretler silindi.');
+  };
+
+  // ---------- Dışa / içe aktar ----------
+  function disaVeri() {
+    return Object.keys(S.kurallar).sort().map((k) => {
+      const p = parcala(k);
+      return { anahtar: k, duzey: p.duzey, plaka: p.plaka, il: p.il, ilce: p.ilce, mahalle: p.mahalle, durum: S.kurallar[k] === 'izin' ? 'satis_izin' : 'satis_red' };
+    });
+  }
+  async function kopyala(metin, ad) {
+    try { await navigator.clipboard.writeText(metin); toast(ad + ' panoya kopyalandı.'); }
+    catch (e) {
+      const ta = $('#iceMetin'); ta.value = metin; ta.focus(); ta.select();
+      toast('Panoya erişilemedi; metin kutuda seçili, elle kopyalayın.');
+    }
+  }
+  $('#btnJson').onclick = () => kopyala(JSON.stringify({ surum: 1, tarih: new Date().toISOString(), kurallar: disaVeri() }, null, 2), 'JSON');
+  $('#btnCsv').onclick = () => {
+    const satir = (a) => a.map((v) => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(';');
+    const csv = [satir(['duzey', 'plaka', 'il', 'ilce', 'mahalle', 'durum'])].concat(disaVeri().map((r) => satir([r.duzey, r.plaka, r.il, r.ilce, r.mahalle, r.durum]))).join('\n');
+    kopyala(csv, 'CSV');
+  };
+  $('#btnIceAl').onclick = () => {
+    let v;
+    try { v = JSON.parse($('#iceMetin').value); } catch (e) { toast('Metin geçerli bir JSON değil.'); return; }
+    const liste = Array.isArray(v) ? v : (v && v.kurallar) || [];
+    const yeni = {};
+    let n = 0;
+    for (const r of liste) {
+      const k = r && r.anahtar, d = r && String(r.durum || '').replace('satis_', '');
+      if (typeof k === 'string' && /^\d{2}(\/[^/]+){0,2}$/.test(k) && (d === 'izin' || d === 'red')) { yeni[k] = d; n++; }
+    }
+    if (!n) { toast('İçe alınacak geçerli işaret bulunamadı.'); return; }
+    S.kurallar = yeni; S.ornek = false; kaydet(); boya(); toast(n + ' işaret içe alındı.');
+  };
+
+  // ---------- Arama ----------
+  const HARF = { 'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u', 'â': 'a', 'î': 'i', 'û': 'u' };
+  const norm = (s) => s.toLocaleLowerCase('tr').replace(/[çğıöşüâîû]/g, (c) => HARF[c]).normalize('NFD').replace(/[̀-ͯ]/g, '');
+  function dizinKur(semtler) {
+    aramaDizini = [];
+    for (const b of B.values()) aramaDizini.push({ k: b.anahtar, duzey: b.duzey, ad: b.ad, yol: yolMetni(b.anahtar), n: norm(b.ad) });
+    for (const s of semtler) aramaDizini.push({ k: s.k, duzey: 'semt', ad: s.ad, yol: s.yol, n: norm(s.ad), c: s.c });
+  }
+  const DSIRA = { il: 0, ilce: 1, semt: 2, mahalle: 3 };
+  let sonuc = [], imlec = -1;
+  function ara(q) {
+    const n = norm(q.trim());
+    if (!n) return [];
+    const out = [];
+    for (const r of aramaDizini) {
+      let puan = -1;
+      if (r.n === n) puan = 0;
+      else if (r.n.startsWith(n)) puan = 1;
+      else if (r.n.split(/[\s-]+/).some((w) => w.startsWith(n))) puan = 2;
+      else if (n.length > 2 && r.n.includes(n)) puan = 3;
+      if (puan >= 0) out.push([puan, DSIRA[r.duzey], r]);
+    }
+    out.sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2].ad.localeCompare(b[2].ad, 'tr'));
+    return out.slice(0, 30).map((x) => x[2]);
+  }
+  const araEl = $('#ara'), sonEl = $('#sonuclar');
+  function sonucCiz() {
+    sonEl.innerHTML = '';
+    if (!araEl.value.trim()) { sonEl.hidden = true; araEl.setAttribute('aria-expanded', 'false'); return; }
+    if (!sonuc.length) sonEl.innerHTML = '<li class="bos">Sonuç yok</li>';
+    sonuc.forEach((r, i) => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', String(i === imlec));
+      li.innerHTML = '<span class="rozet">' + DUZEY[r.duzey] + '</span><span class="ad">' + esc(r.ad) + '</span><span class="yol">' + esc(r.yol) + '</span>';
+      li.addEventListener('mousedown', (e) => { e.preventDefault(); sonucSec(r); });
+      sonEl.appendChild(li);
+    });
+    sonEl.hidden = false;
+    araEl.setAttribute('aria-expanded', 'true');
+  }
+  function sonucSec(r) {
+    sonEl.hidden = true; araEl.setAttribute('aria-expanded', 'false'); araEl.blur();
+    if (r.duzey === 'semt') {
+      map.flyTo(r.c, 14.5, { duration: 0.6 });
+      const k = B.has(r.k) ? r.k : null;
+      if (k) { S.secim.add(k); secimGuncelle(); bilgiGoster(k); }
+      toast(r.ad + ' semti ' + (k ? parcala(k).ad + ' mahallesinde; mahalle seçildi.' : 'gösterildi.'));
+      return;
+    }
+    git(r.k, true);
+  }
+  araEl.addEventListener('input', () => { sonuc = ara(araEl.value); imlec = sonuc.length ? 0 : -1; sonucCiz(); });
+  araEl.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!sonuc.length) return;
+      e.preventDefault();
+      imlec = (imlec + (e.key === 'ArrowDown' ? 1 : -1) + sonuc.length) % sonuc.length;
+      sonucCiz();
+      sonEl.children[imlec]?.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      if (imlec >= 0 && sonuc[imlec]) sonucSec(sonuc[imlec]);
+    } else if (e.key === 'Escape') { sonEl.hidden = true; }
+  });
+  araEl.addEventListener('focus', () => { if (araEl.value.trim()) sonucCiz(); });
+  araEl.addEventListener('blur', () => setTimeout(() => { sonEl.hidden = true; }, 120));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.activeElement !== araEl) {
+      if (S.arac === 'tara') aracSec('gez');
+      else if (S.secim.size) { S.secim.clear(); secimGuncelle(); }
+    }
+  });
+
+  // ---------- Bildirim ----------
+  let toastZ = null;
+  function toast(m) {
+    const t = $('#toast');
+    t.textContent = m;
+    t.classList.add('acik');
+    clearTimeout(toastZ);
+    toastZ = setTimeout(() => t.classList.remove('acik'), 2600);
+  }
+
+  // ---------- Tema değişimi ----------
+  const temaYenile = () => { tokenOku(); boya(); };
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', temaYenile); } catch (e) { /* eski tarayıcı */ }
+  new MutationObserver(temaYenile).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ---------- İlçe ve mahalle adları (yakınlaştıkça) ----------
+  // 8.5 altı il adları, 8.5 ve üstü ilçe adları, 12 ve üstü mahalle adları; çakışan adlar atlanır, büyük bölge önce yazılır
+  const adKatman = L.layerGroup().addTo(map);
+  const mahalleliIlce = new Set();
+  const alanOf = (b) => {
+    if (b.alan == null) { const bb = b.ly.getBounds(); b.alan = (bb.getNorth() - bb.getSouth()) * (bb.getEast() - bb.getWest()); }
+    return b.alan;
+  };
+  function adlariCiz() {
+    adKatman.clearLayers();
+    const z = map.getZoom();
+    const ilDuzey = z < 8.5, mahDuzey = z >= 12;
+    const sinir = map.getBounds().pad(0.1);
+    const aday = [];
+    for (const b of B.values()) {
+      if (!b.c || b.c[0] == null) continue;
+      if (ilDuzey) { if (b.duzey !== 'il') continue; }
+      else if (b.duzey === 'ilce') { if (mahDuzey && mahalleliIlce.has(b.anahtar)) continue; }
+      else if (b.duzey !== 'mahalle' || !mahDuzey) continue;
+      if (sinir.contains(b.c)) aday.push(b);
+    }
+    aday.sort((a, b) => (a.duzey === b.duzey ? alanOf(b) - alanOf(a) : a.duzey === 'mahalle' ? 1 : -1));
+    const kutular = [];
+    let n = 0;
+    for (const b of aday) {
+      const p = map.latLngToContainerPoint(b.c);
+      const w = b.ad.length * ({ il: 6.4, ilce: 7, mahalle: 5.8 }[b.duzey]) + 8, h = b.duzey === 'mahalle' ? 14 : 16;
+      const k = { x1: p.x - w / 2, x2: p.x + w / 2, y1: p.y - h / 2, y2: p.y + h / 2 };
+      if (kutular.some((o) => k.x1 < o.x2 && k.x2 > o.x1 && k.y1 < o.y2 && k.y2 > o.y1)) continue;
+      kutular.push(k);
+      L.marker(b.c, {
+        pane: 'etiket', interactive: false, keyboard: false,
+        icon: L.divIcon({ className: 'ad-etiket ' + ({ il: 'il', ilce: 'ilce', mahalle: 'mah' }[b.duzey]), html: '<span>' + esc(b.ad) + '</span>', iconSize: [0, 0] }),
+      }).addTo(adKatman);
+      if (++n >= 450) break;
+    }
+  }
+  map.on('moveend', adlariCiz);
+
+  gorunurluk();
+  boya();
+  dizinKur([]);
+  adlariCiz();
+
+  // ---------- Mahalleler (arka planda) ----------
+  const semtler = [];
+  let mahToplam = 0;
+  const yuklenenIller = [];
+  try {
+    const liste = await (await fetch('data/mahalle.json')).json();
+    for (const m of liste) {
+      try {
+        const t = await (await fetch(m.dosya)).json();
+        const fs = topojson.feature(t, t.objects.mahalle).features;
+        const g = L.geoJSON(fs, {
+          renderer: rAlt, pane: 'ilce',
+          style: (f) => altStil(m.plaka + '/' + f.properties.ilce + '/' + f.properties.ad, true),
+          onEachFeature: (f, ly) => {
+            const p = f.properties, k = m.plaka + '/' + p.ilce + '/' + p.ad;
+            B.set(k, { anahtar: k, duzey: 'mahalle', ad: p.ad, plaka: m.plaka, ilce: p.ilce, f, ly, c: [p.cy, p.cx] });
+            mahalleliIlce.add(m.plaka + '/' + p.ilce);
+            ly._k = k;
+            ly.on('click', (e) => tikla(k, e));
+            ly.on('mouseover', () => uzerinde(k));
+            ly.on('mouseout', () => uzerinde(null));
+          },
+        });
+        g.addTo(mahGrup);
+        mahKatmanlar.push(g);
+        mahToplam += fs.length;
+        if (t.objects.semt) {
+          for (const s of topojson.feature(t, t.objects.semt).features) {
+            const p = s.properties;
+            const mk = p.mahalle ? m.plaka + '/' + p.ilce + '/' + p.mahalle : null;
+            semtler.push({ k: mk, ad: p.ad, yol: (p.mahalle ? p.mahalle + ', ' : '') + p.ilce + ', ' + m.il, c: [s.geometry.coordinates[1], s.geometry.coordinates[0]] });
+          }
+        }
+        yuklenenIller.push(m.il + ' (' + fs.length.toLocaleString('tr-TR') + ')');
+      } catch (e) { /* tek il yüklenemezse diğerleri sürer */ }
+    }
+  } catch (e) { /* mahalle listesi yok */ }
+  // Haritada zaten görünüyorsa sıralamayı korumak için yeniden ekle
+  if (map.hasLayer(mahGrup)) { map.removeLayer(mahGrup); }
+  gorunurluk();
+  dizinKur(semtler);
+  boya();
+  adlariCiz();
+  $('#mahNot').textContent = yuklenenIller.length
+    ? 'Mahalle sınırları bu demoda ' + yuklenenIller.join(', ') + ' için yüklü; toplam ' + mahToplam.toLocaleString('tr-TR') + ' mahalle. Diğer illerde seçim ilçe düzeyinde yapılır.'
+    : 'Bu demoda mahalle sınırı yüklenmedi; seçim il ve ilçe düzeyinde yapılır.';
+})();
+</script>
+</body>
+</html>
