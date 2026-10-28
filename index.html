@@ -178,6 +178,29 @@ button { cursor: pointer; }
 .ozet-satir .deger { font-family: var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; }
 .kural-not { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); }
 
+/* Bölge kartı: işaretli bölgenin firma bilgileri */
+.kart { background: color-mix(in srgb, var(--izin) 7%, var(--panel)); }
+.kart[data-durum="red"] { background: color-mix(in srgb, var(--red) 7%, var(--panel)); }
+.kart-bas { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.kart-bas .nokta { margin-top: 7px; width: 11px; height: 11px; }
+.kart-baslik { flex: 1; min-width: 0; }
+.kart-baslik h2 { margin: 0; font-size: 17px; font-weight: 600; overflow-wrap: anywhere; }
+.kart-yol { font-size: 12.5px; color: var(--muted); }
+.kart .kapat { border: 0; background: transparent; color: var(--muted); width: 34px; height: 34px; border-radius: 6px; font-size: 20px; line-height: 1; flex: none; }
+.kart .kapat:hover { background: var(--line); color: var(--fg); }
+.kart-not { margin: 0 0 8px; font-size: 12.5px; color: var(--muted); }
+.alanlar { display: grid; gap: 4px; }
+.alanlar label { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 6px; }
+.alanlar input, .alanlar textarea {
+  width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--panel); padding: 9px 10px; font-size: 16px;
+}
+.alanlar textarea { resize: vertical; min-height: 66px; line-height: 1.4; }
+.alanlar input:focus, .alanlar textarea:focus { outline: none; border-color: var(--sel); }
+.kart-alt { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+.ad-sar { display: flex; flex-direction: column; min-width: 0; }
+.ad-sar .firma { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 .kural-grup + .kural-grup { margin-top: 14px; }
 .kural-grup h3 { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; font-size: 13px; font-weight: 600; }
 .kurallar { list-style: none; margin: 0; padding: 0; }
@@ -278,6 +301,26 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
       </div>
     </section>
 
+    <section class="blok kart" id="kart" aria-labelledby="kartAd" hidden>
+      <header class="kart-bas">
+        <span class="nokta" id="kartNokta"></span>
+        <div class="kart-baslik"><h2 id="kartAd"></h2><span class="kart-yol" id="kartYol"></span></div>
+        <button type="button" class="kapat" id="kartKapat" aria-label="Bölge bilgilerini kapat" title="Kapat">×</button>
+      </header>
+      <p class="kart-not" id="kartNot" hidden></p>
+      <div class="alanlar">
+        <label for="fFirma">Firma adı</label>
+        <input id="fFirma" type="text" autocomplete="off">
+        <label for="fUnvan">Ünvan</label>
+        <input id="fUnvan" type="text" autocomplete="off">
+        <label for="fAdres">Adres</label>
+        <textarea id="fAdres" rows="2"></textarea>
+        <label for="fTelefon">Telefon</label>
+        <input id="fTelefon" type="tel" inputmode="tel" autocomplete="off">
+      </div>
+      <p class="kart-alt" id="kartDurum">İsteğe bağlı. Yazdıkça kaydedilir.</p>
+    </section>
+
     <section class="blok" aria-labelledby="hDurum">
       <header class="blok-bas"><h2 id="hDurum">Durum</h2><span class="sayi" id="durumAlt">ilçe bazında</span></header>
       <div class="cubuk" id="cubuk" aria-hidden="true"><i class="izin"></i><i class="red"></i></div>
@@ -336,7 +379,7 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
   const KAYIT = 'laciel-satis-bolgeleri-v1';
   const ORNEK = { '34': 'izin', '34/Esenyurt': 'red', '06': 'izin', '35': 'red', '35/Karşıyaka': 'izin' };
 
-  const S = { kurallar: {}, ornek: false, secim: new Set(), duzey: 'oto', arac: 'gez', lassoBitti: 0, mahNotGosterildi: false };
+  const S = { kurallar: {}, bilgi: {}, ornek: false, secim: new Set(), duzey: 'oto', arac: 'gez', lassoBitti: 0, mahNotGosterildi: false, aktif: null, aktifTik: null };
   const B = new Map();      // anahtar -> bölge kaydı
   const ILLER = new Map();  // plaka -> il adı
   let aramaDizini = [];
@@ -345,12 +388,16 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
   function yukle() {
     try {
       const v = JSON.parse(localStorage.getItem(KAYIT) || 'null');
-      if (v && v.kurallar && typeof v.kurallar === 'object') { S.kurallar = v.kurallar; S.ornek = !!v.ornek; return; }
+      if (v && v.kurallar && typeof v.kurallar === 'object') {
+        S.kurallar = v.kurallar; S.ornek = !!v.ornek;
+        S.bilgi = v.bilgi && typeof v.bilgi === 'object' ? v.bilgi : {};
+        return;
+      }
     } catch (e) { /* depolama kapalı olabilir */ }
     S.kurallar = { ...ORNEK }; S.ornek = true;
   }
   function kaydet() {
-    try { localStorage.setItem(KAYIT, JSON.stringify({ kurallar: S.kurallar, ornek: S.ornek })); } catch (e) { /* yok say */ }
+    try { localStorage.setItem(KAYIT, JSON.stringify({ kurallar: S.kurallar, bilgi: S.bilgi, ornek: S.ornek })); } catch (e) { /* yok say */ }
   }
 
   // ---------- Renkler ----------
@@ -396,8 +443,33 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
   // ---------- Harita ----------
   yukle();
   tokenOku();
-  const map = L.map('harita', { zoomControl: false, preferCanvas: true, minZoom: 4, maxZoom: 17, zoomSnap: 0.25, zoomDelta: 0.5, wheelPxPerZoomLevel: 100 });
+  const map = L.map('harita', { zoomControl: false, preferCanvas: true, minZoom: 4, maxZoom: 17, zoomSnap: 0.25, zoomDelta: 0.5, wheelPxPerZoomLevel: 60, bounceAtZoomLimits: false });
   L.control.zoom({ position: 'topright', zoomInTitle: 'Yakınlaş', zoomOutTitle: 'Uzaklaş' }).addTo(map);
+
+  // Dokunmatik ekranda iki parmakla yakınlaştırma: parmak açıklığının etkisini PINCH_HIZ katına çıkar.
+  // Leaflet'te parmak aralığı 2 katına çıkınca 1 düzey yakınlaşır; burada 2 düzey.
+  const PINCH_HIZ = 2;
+  const olcektenZoom = map.getScaleZoom;
+  let pinchte = false;
+  map.getScaleZoom = function (scale, fromZoom) {
+    if (!pinchte) return olcektenZoom.call(this, scale, fromZoom);
+    const z = (fromZoom === undefined ? this._zoom : fromZoom) + Math.log2(scale) * PINCH_HIZ;
+    return isNaN(z) ? Infinity : z;
+  };
+  const dokunmaHareketi = map.touchZoom._onTouchMove;
+  map.touchZoom._onTouchMove = function (e) {
+    pinchte = true;
+    try { dokunmaHareketi.call(this, e); } finally { pinchte = false; }
+  };
+  // Bazı dokunmatik ekran ve dokunmatik yüzeyler iki parmak hareketini Ctrl+tekerlek olarak gönderir
+  const tekerlek = map.scrollWheelZoom;
+  const tekerlekHareketi = tekerlek._onWheelScroll;
+  tekerlek.disable();
+  tekerlek._onWheelScroll = function (e) {
+    if (e.ctrlKey) this._delta = (this._delta || 0) + L.DomEvent.getWheelDelta(e) * (PINCH_HIZ * 2 - 1);
+    return tekerlekHareketi.call(this, e);
+  };
+  tekerlek.enable();
   map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
   map.attributionControl.addAttribution('© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> katkıcıları');
   [['ilce', 400], ['il', 420], ['secim', 430], ['etiket', 440], ['lasso', 450]].forEach(([ad, z]) => { map.createPane(ad).style.zIndex = z; });
@@ -486,6 +558,7 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     if (S.secim.has(h)) S.secim.delete(h); else S.secim.add(h);
     secimGuncelle();
     bilgiGoster(h);
+    kartAc(h);
   }
   function uzerinde(k) {
     if (uzerKatman) { map.removeLayer(uzerKatman); uzerKatman = null; }
@@ -503,6 +576,8 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     if (e) {
       const kaynak = e.kaynak === k ? '' : ' <span class="b-yol">(' + parcala(e.kaynak).ad + ' işaretinden)</span>';
       durum = '<span class="nokta ' + e.durum + '"></span>' + DURUM[e.durum] + kaynak;
+      const firma = S.bilgi[e.kaynak] && S.bilgi[e.kaynak].firma;
+      if (firma) durum += '</div><div class="b-yol">' + esc(firma);
     }
     const secili = S.secim.has(k) ? ' · <span style="color:var(--sel)">seçili</span>' : '';
     el.innerHTML = '<div><span class="b-ad">' + esc(p.ad) + '</span> <span class="b-yol">· ' + DUZEY[p.duzey] + ', ' + esc(yolMetni(k)) + '</span>' + secili + '</div><div class="b-durum">' + durum + '</div>';
@@ -535,6 +610,47 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     }
   }
 
+  // ---------- Bölge kartı (firma bilgileri) ----------
+  // Dokunulan bölge işaretliyse ya da işaretini bir üst bölgeden alıyorsa, işareti koyan bölgenin kartı açılır
+  const ALANLAR = { firma: 'fFirma', unvan: 'fUnvan', adres: 'fAdres', telefon: 'fTelefon' };
+  function kartAc(k) {
+    const e = etkin(k);
+    if (e) { S.aktif = e.kaynak; S.aktifTik = k; } else S.aktif = null;
+    kartCiz();
+  }
+  function kartCiz() {
+    const el = $('#kart'), k = S.aktif;
+    if (!k || !S.kurallar[k]) { el.hidden = true; el.dataset.k = ''; return; }
+    const p = parcala(k), d = S.kurallar[k];
+    el.hidden = false;
+    el.dataset.durum = d;
+    $('#kartNokta').className = 'nokta ' + d;
+    $('#kartAd').textContent = p.ad;
+    $('#kartYol').textContent = DURUM[d] + ' · ' + DUZEY[p.duzey] + ', ' + yolMetni(k);
+    const not = $('#kartNot');
+    not.hidden = !S.aktifTik || S.aktifTik === k;
+    if (!not.hidden) not.textContent = parcala(S.aktifTik).ad + ' işaretini bu bölgeden alıyor.';
+    if (el.dataset.k !== k) {
+      const v = S.bilgi[k] || {};
+      for (const [alan, id] of Object.entries(ALANLAR)) $('#' + id).value = v[alan] || '';
+      el.dataset.k = k;
+      $('#kartDurum').textContent = 'İsteğe bağlı. Yazdıkça kaydedilir.';
+    }
+  }
+  let kartZ = null;
+  for (const [alan, id] of Object.entries(ALANLAR)) {
+    $('#' + id).addEventListener('input', (ev) => {
+      const k = S.aktif;
+      if (!k) return;
+      const v = { ...(S.bilgi[k] || {}) };
+      if (ev.target.value.trim()) v[alan] = ev.target.value; else delete v[alan];
+      if (Object.keys(v).length) S.bilgi[k] = v; else delete S.bilgi[k];
+      clearTimeout(kartZ);
+      kartZ = setTimeout(() => { kaydet(); kurallarGuncelle(); $('#kartDurum').textContent = 'Kaydedildi.'; }, 400);
+    });
+  }
+  $('#kartKapat').onclick = () => { S.aktif = null; kartCiz(); };
+
   function boya() {
     ilceKatman.eachLayer((ly) => ly.setStyle(altStil(ly._k, false)));
     mahKatmanlar.forEach((g) => g.eachLayer((ly) => ly.setStyle(altStil(ly._k, true))));
@@ -544,15 +660,18 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     kurallarGuncelle();
     secimGuncelle();
     lejantBoya();
+    kartCiz();
     if (S.sonBilgi) bilgiGoster(S.sonBilgi);
   }
 
   function isaretle(durum) {
     const n = S.secim.size;
     if (!n) return;
+    const tek = n === 1 ? [...S.secim][0] : null;
     for (const k of S.secim) { if (durum) S.kurallar[k] = durum; else delete S.kurallar[k]; }
     S.secim.clear();
     kaydet();
+    if (durum && tek) { S.aktif = tek; S.aktifTik = tek; }
     boya();
     toast(durum ? n + ' bölge “' + DURUM[durum] + '” olarak işaretlendi.' : n + ' bölgenin işareti kaldırıldı.');
   }
@@ -597,7 +716,8 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
       const ul = g.querySelector('ul');
       for (const { k, p } of liste) {
         const li = document.createElement('li');
-        li.innerHTML = '<button type="button" class="kural-ad"><span class="rozet">' + DUZEY[p.duzey] + '</span><span class="ad">' + esc(p.ad) + '</span><span class="yol">' + esc(yolMetni(k)) + '</span></button><button type="button" class="sil" aria-label="' + esc(p.ad) + ' işaretini kaldır" title="İşareti kaldır">×</button>';
+        const firma = S.bilgi[k] && S.bilgi[k].firma;
+        li.innerHTML = '<button type="button" class="kural-ad"><span class="rozet">' + DUZEY[p.duzey] + '</span><span class="ad-sar"><span class="ad">' + esc(p.ad) + '</span>' + (firma ? '<span class="firma">' + esc(firma) + '</span>' : '') + '</span><span class="yol">' + esc(yolMetni(k)) + '</span></button><button type="button" class="sil" aria-label="' + esc(p.ad) + ' işaretini kaldır" title="İşareti kaldır">×</button>';
         li.querySelector('.kural-ad').onclick = () => git(k, false);
         li.querySelector('.sil').onclick = () => { delete S.kurallar[k]; kaydet(); boya(); toast(p.ad + ' işareti kaldırıldı.'); };
         ul.appendChild(li);
@@ -624,6 +744,7 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     map.flyToBounds(bnd, { padding: [40, 40], maxZoom: b.duzey === 'mahalle' ? 15 : 12, duration: 0.6 });
     if (sec) { S.secim.add(k); secimGuncelle(); }
     bilgiGoster(k);
+    kartAc(k);
   }
 
   // ---------- Düzey ve araç ----------
@@ -635,7 +756,14 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
     $('#otoAlt').textContent = '· ' + DUZEY[sv];
     $('#otoAlt').hidden = S.duzey !== 'oto';
   }
-  map.on('zoomend', () => { gorunurluk(); ilceKatman.eachLayer((ly) => ly.setStyle({ weight: map.getZoom() < 7 ? 0.45 : 0.8 })); ilKatman.setStyle(ilStil); });
+  let uzakta = map.getZoom() < 7;
+  map.on('zoomend', () => {
+    gorunurluk();
+    if ((map.getZoom() < 7) === uzakta) return;
+    uzakta = !uzakta;
+    ilceKatman.eachLayer((ly) => ly.setStyle({ weight: uzakta ? 0.45 : 0.8 }));
+    ilKatman.setStyle(ilStil);
+  });
   document.querySelectorAll('#segDuzey button').forEach((bt) => bt.addEventListener('click', () => {
     S.duzey = bt.dataset.duzey;
     document.querySelectorAll('#segDuzey button').forEach((x) => x.setAttribute('aria-pressed', String(x === bt)));
@@ -714,14 +842,18 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
       return;
     }
     clearTimeout(silOnay); silOnay = null; bt.textContent = 'Tüm işaretleri sil';
-    S.kurallar = {}; S.ornek = false; kaydet(); boya(); toast('Tüm işaretler silindi.');
+    S.kurallar = {}; S.bilgi = {}; S.ornek = false; kaydet(); boya(); toast('Tüm işaretler silindi.');
   };
 
   // ---------- Dışa / içe aktar ----------
   function disaVeri() {
     return Object.keys(S.kurallar).sort().map((k) => {
       const p = parcala(k);
-      return { anahtar: k, duzey: p.duzey, plaka: p.plaka, il: p.il, ilce: p.ilce, mahalle: p.mahalle, durum: S.kurallar[k] === 'izin' ? 'satis_izin' : 'satis_red' };
+      const v = S.bilgi[k] || {};
+      return {
+        anahtar: k, duzey: p.duzey, plaka: p.plaka, il: p.il, ilce: p.ilce, mahalle: p.mahalle, durum: S.kurallar[k] === 'izin' ? 'satis_izin' : 'satis_red',
+        firma: v.firma || null, unvan: v.unvan || null, adres: v.adres || null, telefon: v.telefon || null,
+      };
     });
   }
   async function kopyala(metin, ad) {
@@ -734,21 +866,27 @@ details.blok summary { cursor: pointer; font-size: 12px; font-weight: 600; text-
   $('#btnJson').onclick = () => kopyala(JSON.stringify({ surum: 1, tarih: new Date().toISOString(), kurallar: disaVeri() }, null, 2), 'JSON');
   $('#btnCsv').onclick = () => {
     const satir = (a) => a.map((v) => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(';');
-    const csv = [satir(['duzey', 'plaka', 'il', 'ilce', 'mahalle', 'durum'])].concat(disaVeri().map((r) => satir([r.duzey, r.plaka, r.il, r.ilce, r.mahalle, r.durum]))).join('\n');
+    const csv = [satir(['duzey', 'plaka', 'il', 'ilce', 'mahalle', 'durum', 'firma', 'unvan', 'adres', 'telefon'])]
+      .concat(disaVeri().map((r) => satir([r.duzey, r.plaka, r.il, r.ilce, r.mahalle, r.durum, r.firma, r.unvan, r.adres, r.telefon]))).join('\n');
     kopyala(csv, 'CSV');
   };
   $('#btnIceAl').onclick = () => {
     let v;
     try { v = JSON.parse($('#iceMetin').value); } catch (e) { toast('Metin geçerli bir JSON değil.'); return; }
     const liste = Array.isArray(v) ? v : (v && v.kurallar) || [];
-    const yeni = {};
+    const yeni = {}, yeniBilgi = {};
     let n = 0;
     for (const r of liste) {
       const k = r && r.anahtar, d = r && String(r.durum || '').replace('satis_', '');
-      if (typeof k === 'string' && /^\d{2}(\/[^/]+){0,2}$/.test(k) && (d === 'izin' || d === 'red')) { yeni[k] = d; n++; }
+      if (typeof k === 'string' && /^\d{2}(\/[^/]+){0,2}$/.test(k) && (d === 'izin' || d === 'red')) {
+        yeni[k] = d; n++;
+        const v = {};
+        for (const alan of Object.keys(ALANLAR)) if (typeof r[alan] === 'string' && r[alan].trim()) v[alan] = r[alan];
+        if (Object.keys(v).length) yeniBilgi[k] = v;
+      }
     }
     if (!n) { toast('İçe alınacak geçerli işaret bulunamadı.'); return; }
-    S.kurallar = yeni; S.ornek = false; kaydet(); boya(); toast(n + ' işaret içe alındı.');
+    S.kurallar = yeni; S.bilgi = yeniBilgi; S.ornek = false; kaydet(); boya(); toast(n + ' işaret içe alındı.');
   };
 
   // ---------- Arama ----------
